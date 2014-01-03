@@ -1,0 +1,12 @@
+
+Some warnings and unimplemented messages
+
+another pass...
+------------------------------<stderr>------------------------------
+*** warning: test_js_base.rb (XXX) This is a warning
+*** unimplemented: test_js_base.rb (XXX) This is an unimplemented message
+------------------------------<stdout>------------------------------
+
+another pass...
+
+another pass...

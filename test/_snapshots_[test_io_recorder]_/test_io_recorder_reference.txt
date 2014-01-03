@@ -1,0 +1,16 @@
+
+This is a test of the IORecorder class.
+Hello, type something:This is Thursday
+...'This is Thursday'
+Calling $stdout.putc: Aa
+Calling $stdout.printf: Here is an integer: 72
+Type any key (q to quit):a...(a)
+Type any key (q to quit):b...(b)
+Type any key (q to quit):c...(c)
+Type any key (q to quit):d...(d)
+Type any key (q to quit):q...(q)
+1
+2
+33
+23
+This concludes the test.

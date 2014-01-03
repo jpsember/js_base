@@ -1,0 +1,16 @@
+
+x=0
+------------------------------<stderr>------------------------------
+*** performing assertion: test_js_base.rb (XXX) aborting, 0 is equal to 3
+------------------------------<stdout>------------------------------
+x=1
+x=2
+x=3
+...ignoring die(Assertion failure: aborting, 3 is equal to 3)...
+x=4
+x=5
+x=6
+x=7
+x=8
+...ignoring die(Assertion failure)...
+x=9

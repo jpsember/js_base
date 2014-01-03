@@ -1,0 +1,15 @@
+
+x=0
+x=1
+x=2
+x=3
+Assertion failure: aborting, 3 is equal to 3
+...ignoring exit(false)...
+x=4
+x=5
+x=6
+x=7
+x=8
+Assertion failure
+...ignoring exit(false)...
+x=9

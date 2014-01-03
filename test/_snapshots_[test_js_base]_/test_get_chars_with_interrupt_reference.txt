@@ -1,0 +1,7 @@
+
+Enter some characters, and stop with ctrl-c
+a You typed: 'a'
+b You typed: 'b'
+c You typed: 'c'
+d You typed: 'd'
+
