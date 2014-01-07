@@ -252,7 +252,7 @@ class IORecorder
 
     def getc
       if @recording
-        x = $actual_stdin.getc
+        x = @actual_stdin.getc
         @user_input_file.write(x)
       else
         x = @user_input_file.getc

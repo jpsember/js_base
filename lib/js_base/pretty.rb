@@ -45,6 +45,8 @@ class Pretty
       dump_hash(arg)
     elsif arg.class == FalseClass || arg.class == TrueClass
       dump_boolean(arg)
+    elsif arg.is_a?(Set)
+      dump_set(arg)
     else
       @description << arg.inspect
     end
@@ -83,6 +85,20 @@ class Pretty
   def dump_boolean(flag)
     @description << (flag ? "T" : "F")
     @description << ' '
+  end
+
+  def dump_set(set)
+    @description << 'Set {'
+    push
+    set.each do |x|
+      @description << "\n"
+      pad
+      push
+      dump(x)
+      pop
+    end
+    @description << ' }'
+    pop
   end
 
 end

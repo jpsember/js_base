@@ -199,7 +199,7 @@ end # module
 
 # Add other utility files as well
 
-req 'file_utils', 'js_base'
+req 'file_utils array_utils', 'js_base'
 
 if !$-w
   warning "Ruby warnings are DISABLED; please set the RUBYOPT environment variable to '-w'"
