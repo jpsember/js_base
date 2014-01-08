@@ -116,13 +116,8 @@ module RubyBase
   #
   def get_user_char(replacement_for_ctrl_c = nil)
     begin
-      system('stty raw -echo')
-      char = $stdin.getc
-      if char.is_a?(Integer)
-        char = char.chr
-      end
-    ensure
-      system('stty -raw echo')
+      require 'io/console'
+      char = $stdin.getch
     end
     if char.ord == 3
       if !replacement_for_ctrl_c

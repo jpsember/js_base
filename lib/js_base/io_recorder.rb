@@ -3,6 +3,7 @@
 require 'stringio'
 require 'tempfile'
 require 'js_base/swizzler'
+#require 'io/console'
 
 # Exception class for snapshot disagreeing with reference version
 #
@@ -250,12 +251,12 @@ class IORecorder
     def flush
     end
 
-    def getc
+    def getch
       if @recording
-        x = @actual_stdin.getc
+        x = @actual_stdin.getch
         @user_input_file.write(x)
       else
-        x = @user_input_file.getc
+        x = @user_input_file.getch
         raise SnapshotException,"Out of input" if !x
       end
       $stdout.write(x)
