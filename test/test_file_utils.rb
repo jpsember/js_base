@@ -99,5 +99,51 @@ class TestFileUtils <  Test::Unit::TestCase
     end
   end
 
+  def test_remove_ext1
+    assert_equal(FileUtils.remove_extension('a/b_c.b/d'),'a/b_c.b/d')
+  end
+
+  def test_remove_ext2
+    assert_equal(FileUtils.remove_extension('a/b_c.b/d.txt'),'a/b_c.b/d')
+  end
+
+  def test_add_ext1
+    assert_equal(FileUtils.add_extension('a/b_c.b/d','txt'),'a/b_c.b/d.txt')
+  end
+
+  def test_add_ext2
+    assert_equal(FileUtils.add_extension('a/b_c.b/d','.txt'),'a/b_c.b/d.txt')
+  end
+
+  def test_change_ext1
+    assert_equal(FileUtils.change_extension('a/b_c.b/d','txt'),'a/b_c.b/d.txt')
+  end
+
+  def test_change_ext2
+    assert_equal(FileUtils.change_extension('a/b_c.b/d.bin','.txt'),'a/b_c.b/d.txt')
+  end
+
+  def test_change_ext3
+    assert_equal(FileUtils.change_extension('a/b_c.b/d.bin','txt'),'a/b_c.b/d.txt')
+  end
+
+  def test_add_extension_error1
+    assert_raise ArgumentError do
+      FileUtils.add_extension('a/b.txt','txt')
+    end
+  end
+
+  def test_add_extension_error2
+    assert_raise ArgumentError do
+      FileUtils.add_extension('a/b.txt','.')
+    end
+  end
+
+  def test_add_extension_error3
+    assert_raise ArgumentError do
+      FileUtils.add_extension('a/b.txt','')
+    end
+  end
+
 end
 

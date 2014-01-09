@@ -34,4 +34,35 @@ module FileUtils
     entries
   end
 
+  # Remove extension from a path, if it has one
+  # Returns the modified path
+  #
+  def remove_extension(path)
+    path2 = path.dup
+    ext = File.extname(path2)
+    if ext.length != 0
+      path2.slice!(-ext.length..-1)
+    end
+    path2
+  end
+
+  # Add an extension to a path, which must not currently have an extension
+  # Returns the modified path
+  #
+  def add_extension(path,ext)
+    raise ArgumentError,"path already has extension" if File.extname(path) != ''
+    if !ext.start_with?('.')
+      ext = '.' + ext
+    end
+    raise ArgumentError,"bad or missing extension" if ext.length == 1
+    path + ext
+  end
+
+  # Change path's extension, or adds extension if it doesn't already have one.
+  # Returns the modified path
+  #
+  def change_extension(path, ext)
+    add_extension(remove_extension(path),ext)
+  end
+
 end
