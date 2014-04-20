@@ -2,8 +2,8 @@ require 'rake'
 
 Gem::Specification.new do |s|
   s.name        = 'js_base'
-  s.version     = '0.0.3'
-  s.date        = '2013-12-04'
+  s.version     = '1.0.0'
+  s.date        = '2014-04-19'
   s.summary     = "Jeff's basic Ruby utility functions"
   s.description = "Some fundamental functions, plus some testing utilities"
   s.authors     = ["Jeff Sember"]

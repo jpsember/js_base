@@ -1,6 +1,4 @@
-#!/usr/bin/env ruby
-
-require 'js_base/test'
+require 'js_base/js_test'
 
 # Set up some examples of the different types of methods
 
@@ -57,15 +55,7 @@ class Beta
 end
 
 
-class TestSwizzler < Test::Unit::TestCase
-
-  def setup
-    @swizzler = Swizzler.new
-  end
-
-  def teardown
-    @swizzler.remove_all
-  end
+class TestSwizzler < JSTest
 
   def has_instance_method(the_class,method_name)
     begin
@@ -148,20 +138,20 @@ class TestSwizzler < Test::Unit::TestCase
     assert(a.our_method == 'blue')
     assert(a.our_method_with_args(5,12) == 17)
 
-    @swizzler.add('Alpha','our_method') do
+    self.swizzler.add('Alpha','our_method') do
       'red'
     end
-    @swizzler.add('Alpha','our_method_with_args') do |x,y|
+    self.swizzler.add('Alpha','our_method_with_args') do |x,y|
       x * y
     end
     assert(a.our_method == 'red')
     assert(a.our_method_with_args(5,12) == 60)
 
-    @swizzler.remove('Alpha','our_method')
+    self.swizzler.remove('Alpha','our_method')
     assert(a.our_method == 'blue')
     assert(a.our_method_with_args(5,12) == 60)
 
-    @swizzler.remove('Alpha','our_method_with_args')
+    self.swizzler.remove('Alpha','our_method_with_args')
     assert(a.our_method == 'blue')
     assert(a.our_method_with_args(5,12) == 17)
   end
@@ -169,16 +159,16 @@ class TestSwizzler < Test::Unit::TestCase
   def test_950_remove_all
     a = Alpha.new
 
-    @swizzler.add('Alpha','our_method'){'red'}
-    @swizzler.add('Alpha','our_method_with_args'){|x,y| x*y}
-    @swizzler.add_meta('Alpha','our_class_method'){'red'}
-    @swizzler.add(nil,'gamma'){'red'}
+    self.swizzler.add('Alpha','our_method'){'red'}
+    self.swizzler.add('Alpha','our_method_with_args'){|x,y| x*y}
+    self.swizzler.add_meta('Alpha','our_class_method'){'red'}
+    self.swizzler.add(nil,'gamma'){'red'}
 
     assert_equal(a.gamma,'Alpha gamma')
 
     assert_equal(gamma(),'red')
 
-    @swizzler.remove_all
+    self.swizzler.remove_all
 
     assert_equal(Alpha.our_class_method(), 'blue')
     assert_equal(a.our_method, 'blue')
@@ -188,26 +178,26 @@ class TestSwizzler < Test::Unit::TestCase
 
   def test_400_class_methods
     assert(Alpha.our_class_method() == 'blue')
-    @swizzler.add_meta('Alpha','our_class_method'){'red'}
+    self.swizzler.add_meta('Alpha','our_class_method'){'red'}
     assert(Alpha.our_class_method() == 'red')
-    @swizzler.remove_all
+    self.swizzler.remove_all
     assert(Alpha.our_class_method() == 'blue')
   end
 
   def test_500_top_level
     assert(gamma() == 'toplevel gamma')
-    @swizzler.add(nil,'gamma'){'red'}
+    self.swizzler.add(nil,'gamma'){'red'}
     assert(__original__gamma() == 'toplevel gamma')
     assert(gamma() == 'red')
-    @swizzler.remove(nil,'gamma')
+    self.swizzler.remove(nil,'gamma')
     assert(gamma() == 'toplevel gamma')
   end
 
   def test_600_module_stuff
     assert_equal('blue',OurModule.our_module_function)
-    @swizzler.add_meta('OurModule','our_module_function'){'red'}
+    self.swizzler.add_meta('OurModule','our_module_function'){'red'}
     assert_equal('red',OurModule.our_module_function)
-    @swizzler.remove_all
+    self.swizzler.remove_all
     assert_equal('blue',OurModule.our_module_function)
   end
 
@@ -216,17 +206,17 @@ class TestSwizzler < Test::Unit::TestCase
     b = Beta.new
     assert_equal('blue',a.our_method)
     assert_equal('blue',b.our_method)
-    @swizzler.add('OurModule','our_method'){'red'}
+    self.swizzler.add('OurModule','our_method'){'red'}
     assert_equal('blue',a.our_method) # Alpha's method is distinct from Beta's
     assert_equal('red',b.our_method)
 
-    @swizzler.remove_all
+    self.swizzler.remove_all
     assert_equal('blue',b.our_method)
   end
 
   def test_700_kernel_method
     assert_equal('17',String(17))
-    @swizzler.add('Kernel','String'){|arg| 'ZZZ'}
+    self.swizzler.add('Kernel','String'){|arg| 'ZZZ'}
     assert_equal('ZZZ',String(17))
   end
 
@@ -235,9 +225,9 @@ class TestSwizzler < Test::Unit::TestCase
     sizes = []
     for pass in 0...3 do
       if pass == 1
-        @swizzler.shorten_backtraces
+        self.swizzler.shorten_backtraces
       else
-        @swizzler.remove_all
+        self.swizzler.remove_all
       end
 
       begin

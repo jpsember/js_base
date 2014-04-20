@@ -1,5 +1,5 @@
 
-This is a test of the IORecorder class.
+This is a test of the TestSnapshot class.
 Calling $stdout.putc: Aa
 Calling $stdout.printf: Here is an integer: 72
 1

@@ -1,15 +1,13 @@
-#!/usr/bin/env ruby
-
-require 'js_base/test'
+require 'js_base/js_test'
 require 'js_base/pretty'
 
-class TestPretty <  Test::Unit::TestCase
+class TestPretty < JSTest
 
   def test_pretty_print
     dict = {"a" => 12, "b" => [1,2,3,4], "c" => {"i" => 1, "ii" => 2, "iii" => 3}}
     array = ['January','February',dict,'April']
 
-    IORecorder.new.perform do
+    TestSnapshot.new.perform do
       puts Pretty.print(array)
     end
   end
@@ -19,7 +17,7 @@ class TestPretty <  Test::Unit::TestCase
             "d" => Set.new([3,1,4,1,5,9,2,7,"alpha","beta"])}
     array = ['January','February',dict,'April']
 
-    IORecorder.new.perform do
+    TestSnapshot.new.perform do
       puts Pretty.print(array)
     end
   end

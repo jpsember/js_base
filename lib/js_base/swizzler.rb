@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 class Swizzler
 
   $within_backtrace = false

@@ -1,8 +1,6 @@
-#!/usr/bin/env ruby
+require 'js_base/js_test'
 
-require 'js_base/test'
-
-class TestFileUtils <  Test::Unit::TestCase
+class TestFileUtils < JSTest
 
   def setup
     enter_test_directory

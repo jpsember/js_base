@@ -1,8 +1,6 @@
-#!/usr/bin/env ruby
+require 'js_base/js_test'
 
-require 'js_base/test'
-
-class TestArrayUtils <  Test::Unit::TestCase
+class TestArrayUtils < JSTest
 
   def result(array)
     array.binary_search{|x| x >= 5}

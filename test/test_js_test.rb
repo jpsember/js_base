@@ -1,21 +1,12 @@
-#!/usr/bin/env ruby
+require 'js_base/js_test'
 
-require 'js_base/test'
+class TestJSTest < JSTest
 
-class TestTest < Test::Unit::TestCase
-
-  def setup
+  def test_generate_files
     enter_test_directory
-  end
-
-  def teardown
-    leave_test_directory
-  end
-
-  def test_generate
     FileUtils.mkdir('z')
 
-    TestUtils.generate_files('z',{
+    generate_files('z',{
       'a' => {
         'b.txt' => 'b contents',
         'c' => {
@@ -31,3 +22,4 @@ class TestTest < Test::Unit::TestCase
   end
 
 end
+

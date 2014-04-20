@@ -1,0 +1,17 @@
+
+This is a test of the TestSnapshot class.
+Hello, type something:Computational Geometry
+...'Computational Geometry'
+Calling $stdout.putc: Aa
+Calling $stdout.printf: Here is an integer: 72
+Type any key (q to quit):...(1)
+Type any key (q to quit):...(2)
+Type any key (q to quit):...(3)
+Type any key (q to quit):...(4)
+Type any key (q to quit):...(5)
+Type any key (q to quit):...(q)
+1
+2
+33
+23
+This concludes the test.

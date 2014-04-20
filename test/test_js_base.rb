@@ -1,20 +1,9 @@
-#!/usr/bin/env ruby
+require 'js_base/js_test'
 
-require 'js_base/test'
-
-class TestJSBase <  Test::Unit::TestCase
-
-  def setup
-    enter_test_directory
-    @swizzler = Swizzler.new
-  end
-
-  def teardown
-    @swizzler.remove_all
-    leave_test_directory
-  end
+class TestJSBase < JSTest
 
   def test_run_cmds
+    enter_test_directory
     cmds =<<-eos
       pwd
       mkdir alpha
@@ -31,6 +20,7 @@ class TestJSBase <  Test::Unit::TestCase
   end
 
   def test_run_cmds_with_failure
+    enter_test_directory
     cmds =<<-eos
       pwd
       mkdir alpha
@@ -51,7 +41,7 @@ class TestJSBase <  Test::Unit::TestCase
 
   def test_get_chars_with_interrupt
     interrupted = false
-    IORecorder.new.perform do
+    TestSnapshot.new.perform do
       puts
       puts "Enter some characters, and stop with ctrl-c"
       begin
@@ -67,7 +57,7 @@ class TestJSBase <  Test::Unit::TestCase
   end
 
   def test_get_chars_without_interrupt
-    IORecorder.new.perform do
+    TestSnapshot.new.perform do
       puts
       puts "Enter some characters, and stop with 'q'; type ctrl-c one or more times"
       while true
@@ -79,14 +69,14 @@ class TestJSBase <  Test::Unit::TestCase
   end
 
   def test_assertions
-    @swizzler.add(nil,'die') do |message|
+    self.swizzler.add(nil,'die') do |message|
       puts "...ignoring die(#{message})..."
     end
 
     # Reset the global flag that indicates whether assertion warnings have been given.
     $assertions_found = false
 
-    IORecorder.new.perform do
+    TestSnapshot.new.perform do
       puts
       10.times do |x|
         puts "x=#{x}"
@@ -100,14 +90,14 @@ class TestJSBase <  Test::Unit::TestCase
   end
 
   def test_assertions_exit
-    @swizzler.add('Kernel','exit') do |code|
+    self.swizzler.add('Kernel','exit') do |code|
       puts "...ignoring exit(#{code})..."
     end
 
     # Reset the global flag that indicates whether assertion warnings have been given.
     $assertions_found = false
 
-    IORecorder.new.perform do
+    TestSnapshot.new.perform do
       puts
       10.times do |x|
         puts "x=#{x}"
@@ -121,7 +111,7 @@ class TestJSBase <  Test::Unit::TestCase
   end
 
   def test_warnings
-    IORecorder.new.perform do
+    TestSnapshot.new.perform do
       puts
       puts "Some warnings and unimplemented messages"
       3.times do

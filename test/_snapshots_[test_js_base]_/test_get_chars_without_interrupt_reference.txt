@@ -1,10 +1,9 @@
 
 Enter some characters, and stop with 'q'; type ctrl-c one or more times
-a You typed: 'a'
-b You typed: 'b'
-c You typed: 'c'
- You typed: '?'
- You typed: '?'
-a You typed: 'a'
-b You typed: 'b'
-q
+ You typed: 'a'
+ You typed: 'b'
+ You typed: 'c'
+ You typed: '?'
+ You typed: '?'
+ You typed: 'a'
+ You typed: 'b'
