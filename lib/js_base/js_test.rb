@@ -4,19 +4,17 @@ require 'js_base/test_snapshot'
 
 class JSTest < Test::Unit::TestCase
 
-  attr_accessor :original_directory
-  attr_accessor :the_test_dir
   attr_accessor :swizzler
 
   def setup
     super
-    self.original_directory = nil
-    self.the_test_dir = nil
+    @original_directory = nil
+    @test_dir = nil
     self.swizzler = Swizzler.new
   end
 
   def teardown
-    leave_test_directory if self.original_directory
+    leave_test_directory if @original_directory
     self.swizzler.remove_all
     super
   end
@@ -39,20 +37,20 @@ class JSTest < Test::Unit::TestCase
       subdirectory_name.insert(0,'temporary_')
     end
 
-    self.the_test_dir = File.join(script_path,subdirectory_name)
-    FileUtils.mkdir_p(self.the_test_dir)
+    @test_dir = File.join(script_path,subdirectory_name)
+    FileUtils.mkdir_p(@test_dir)
 
-    self.original_directory = Dir.pwd
-    Dir.chdir(self.the_test_dir)
+    @original_directory = Dir.pwd
+    Dir.chdir(@test_dir)
   end
 
   # Restore the original directory, and optionally delete the test directory
   #
   def leave_test_directory(retain = false)
-    raise IllegalStateException, "No test directory found" if !self.original_directory
-    Dir.chdir(self.original_directory)
-    self.original_directory = nil
-    FileUtils.rm_rf(self.the_test_dir) if !retain
+    raise IllegalStateException, "No test directory found" if !@original_directory
+    Dir.chdir(@original_directory)
+    @original_directory = nil
+    FileUtils.rm_rf(@test_dir) if !retain
   end
 
   # Generate hierarchy of text files
@@ -60,9 +58,7 @@ class JSTest < Test::Unit::TestCase
   #
   def generate_files(base_dir,script,mtime=nil)
 
-    if !base_dir
-      base_dir = Dir.pwd
-    end
+    base_dir ||= Dir.pwd
 
     script.each_pair do |filename,value|
       path = File.join(base_dir,filename)
