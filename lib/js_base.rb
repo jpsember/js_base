@@ -103,6 +103,12 @@ def req(fileListStr,subdir = nil)
   end
 end
 
+# A 'do { ... } while false' loop structure, so 'break' can be done to jump to the end
+#
+def once_only
+  yield
+end
+
 # This module contains less frequently used methods, to avoid
 # polluting the top-level namespace.
 #
