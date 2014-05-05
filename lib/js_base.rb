@@ -202,7 +202,10 @@ end # module
 
 req 'file_utils array_utils', 'js_base'
 
-if !$-w
+# I'm disabling this warning nag message, since I've been using some third party libraries
+# that seem riddled with warnings, and it's creating too much noise.
+#
+if false && !$-w
   warning "Ruby warnings are DISABLED; please set the RUBYOPT environment variable to '-w'"
 end
 
