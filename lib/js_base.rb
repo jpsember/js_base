@@ -200,7 +200,7 @@ end # module
 
 # Add other utility files as well
 
-req 'file_utils array_utils', 'js_base'
+req 'file_utils array_utils hash_utils', 'js_base'
 
 # I'm disabling this warning nag message, since I've been using some third party libraries
 # that seem riddled with warnings, and it's creating too much noise.
