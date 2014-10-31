@@ -18,17 +18,18 @@ class TextEditor
     editor = (ENV['EDITOR'] || 'vi').dup
 
     cmd = editor
+    pth = "\"#{@path}\""
 
     case editor
     when 'vi','vim'
       cmd << " +#{@line_number}" if @line_number
-      cmd << " #{@path}"
+      cmd << " #{pth}"
     when 'subl'
-      cmd << " #{@path}"
+      cmd << " #{pth}"
       cmd << ":#{@line_number}" if @line_number
       cmd << ' -n -w'
     else
-      cmd << " #{@path}"
+      cmd << " #{pth}"
     end
     system(cmd)
   end
