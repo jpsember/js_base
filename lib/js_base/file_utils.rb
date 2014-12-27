@@ -65,4 +65,25 @@ module FileUtils
     add_extension(remove_extension(path),ext)
   end
 
+  # Walk a directory tree, calling a block for each file of a particular extension encountered
+  #
+  def process_directory_tree(root_path,extension,&block)
+    die("bad argument") if !extension.start_with?(".")
+    stack = []
+    stack << root_path
+    while !stack.empty?
+      path = stack.pop
+      entries = directory_entries(path)
+      entries.each do |basename|
+        file = File.join(path,basename)
+        if File.directory?(file)
+          stack << file
+        else
+          next if !basename.end_with?(extension)
+          yield(file)
+        end
+      end
+    end
+  end
+
 end
