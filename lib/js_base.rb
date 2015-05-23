@@ -209,3 +209,4 @@ if false && !$-w
   warning "Ruby warnings are DISABLED; please set the RUBYOPT environment variable to '-w'"
 end
 
+die "Unexpected Ruby version number" if !RUBY_VERSION.start_with?("2.")
