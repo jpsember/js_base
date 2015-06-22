@@ -48,8 +48,9 @@ class TestSnapshot
     @snapshot_subdir = File.join(File.dirname(caller_path),@snapshot_basename)
   end
 
-  def perform(&block)
-    setup()
+  def perform(replace_existing_snapshot=false, &block)
+    @replace_existing_snapshot = replace_existing_snapshot
+    setup
     completed = false
     begin
       yield
@@ -73,8 +74,7 @@ class TestSnapshot
 
   def setup
     calculate_paths()
-    @recording = !File.exist?(@reference_path)
-    # prepare_script_files()
+    @recording = @replace_existing_snapshot || !File.exist?(@reference_path)
 
     @iocapture = IOCapture.new
 
@@ -110,7 +110,18 @@ class TestSnapshot
         end
 
         # Write output
-        FileUtils.write_text_file(@reference_path,@iocapture.output_content)
+
+        output_content = @iocapture.output_content
+
+        # Print warning if existing snapshot changed
+        if @replace_existing_snapshot
+          existing = FileUtils.read_text_file(@reference_path)
+          if (existing && output_content != existing)
+            puts "...snapshot changed: #{@reference_path}"
+          end
+        end
+
+        FileUtils.write_text_file(@reference_path,output_content)
 
       else
 

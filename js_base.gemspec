@@ -1,9 +1,9 @@
 require 'rake'
 
 Gem::Specification.new do |s|
-  s.name        = 'js_base'
-  s.version     = '1.0.2'
-  s.date        = '2014-04-19'
+  s.name        = File.basename(__FILE__,'.gemspec')
+  s.version     = '1.0.3'
+  s.date        = Time.now
   s.summary     = "Jeff's basic Ruby utility functions"
   s.description = "Some fundamental functions, plus some testing utilities"
   s.authors     = ["Jeff Sember"]
@@ -17,4 +17,3 @@ Gem::Specification.new do |s|
   s.test_files  = Dir.glob('test/*.rb')
   s.license     = 'MIT'
 end
-
