@@ -4,7 +4,7 @@ class TestSCall < JSTest
 
   def test_scall_capture_call_nonexistent_program
     result,success = scall('fooxyz arg1 arg2', false)
-    assert_false(success)
+    assert(!success)
   end
 
 end

@@ -50,7 +50,15 @@ end
 #
 def scall(cmd, abort_if_problem = true)
   require 'open3'
-  res,status = Open3.capture2e(cmd)
+  res = nil
+  status = false
+  begin
+    res,status = Open3.capture2e(cmd)
+  rescue Exception => e
+    status = 1
+    res = e.to_s
+  end
+
   success = (status == 0)
 
   if !success && abort_if_problem
