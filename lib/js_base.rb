@@ -117,6 +117,16 @@ def once_only
   yield
 end
 
+# Switch to the calling script's directory to run a block
+def from_our_dir(depth = 0)
+  die "Missing block" if !block_given?
+  caller_info = caller[depth]
+  caller_file = caller_info.split(':')[0]
+  caller_dir = File.dirname(caller_file)
+
+  Dir.chdir(caller_dir){ yield }
+end
+
 # This module contains less frequently used methods, to avoid
 # polluting the top-level namespace.
 #

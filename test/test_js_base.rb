@@ -123,5 +123,12 @@ class TestJSBase < JSTest
     end
   end
 
+  def test_from_our_dir
+    original_dir = Dir.pwd
+    require_relative 'subdir/misc'
+    misc_test_from_our_dir
+    assert_equal(Dir.pwd,original_dir)
+  end
+
 end
 
