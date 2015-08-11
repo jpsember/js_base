@@ -127,6 +127,11 @@ def from_our_dir(depth = 0)
   Dir.chdir(caller_dir){ yield }
 end
 
+def pretty_print(object)
+  require 'json'
+  JSON.pretty_generate(object)
+end
+
 # This module contains less frequently used methods, to avoid
 # polluting the top-level namespace.
 #
