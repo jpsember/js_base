@@ -1,3 +1,5 @@
+# Pretty-print Ruby objects; attempt to make them look like JSON
+#
 class Pretty
 
   def initialize(object)
@@ -11,10 +13,15 @@ class Pretty
 
   def to_s
     if !@description
-      @description = ''
-      @indent_stack = []
-      @indent = 0
-      dump(@object)
+      if false # About to refactor to use this
+        require 'json'
+        @description =JSON.pretty_generate(@object)
+      else
+        @description = ''
+        @indent_stack = []
+        @indent = 0
+        dump(@object)
+      end
     end
     @description
   end
@@ -38,7 +45,7 @@ class Pretty
 
   def dump(arg)
     if !arg
-      @description << '<nil>'
+      @description << 'null'
     elsif arg.is_a?(Array)
       dump_array(arg)
     elsif arg.is_a?(Hash)
@@ -46,20 +53,22 @@ class Pretty
     elsif arg.class == FalseClass || arg.class == TrueClass
       dump_boolean(arg)
     elsif arg.is_a?(Set)
-      dump_set(arg)
+      # There's no 'set' in JSON, so approximate with an array
+      dump_array(arg)
     else
       @description << arg.inspect
     end
   end
 
   def dump_array(array)
-    @description << 'Array ['
+    @description << '['
     push
-    array.each do |x|
+    array.each_with_index do |x,index|
       @description << "\n"
       pad
       push
       dump(x)
+      @description << ',' if index + 1 < array.size
       pop
     end
     pop
@@ -67,15 +76,16 @@ class Pretty
   end
 
   def dump_hash(hash)
-    @description << 'Hash {'
+    @description << '{'
     push
-    hash.each_pair do |key,val|
+    hash.each_with_index do |(key,val),index|
       s2 = key.to_s
       @description << "\n"
       pad
-      @description << s2.chomp << ' => '
-      push 4
+      @description << '"' << s2.chomp << '" => '
+      push 6
       dump(val)
+      @description << ',' if index + 1 < hash.size
       pop
     end
     @description << ' }'
@@ -83,22 +93,8 @@ class Pretty
   end
 
   def dump_boolean(flag)
-    @description << (flag ? "T" : "F")
+    @description << (flag ? "true" : "false")
     @description << ' '
-  end
-
-  def dump_set(set)
-    @description << 'Set {'
-    push
-    set.each do |x|
-      @description << "\n"
-      pad
-      push
-      dump(x)
-      pop
-    end
-    @description << ' }'
-    pop
   end
 
 end

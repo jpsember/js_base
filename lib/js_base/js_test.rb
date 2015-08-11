@@ -10,6 +10,7 @@ class JSTest < Test::Unit::TestCase
     super
     @original_directory = nil
     @test_dir = nil
+    @saved_stdout = nil
     self.swizzler = Swizzler.new
   end
 
@@ -75,6 +76,28 @@ class JSTest < Test::Unit::TestCase
         end
       end
     end
+  end
+
+  # Redirect stdout to a string buffer
+  #
+  def redirect_stdout
+    raise IllegalStateException, "Already redirected" if @saved_stdout
+    @saved_stdout = $stdout
+    $stdout = StringIO.new
+  end
+
+  # Restore stdout, if it was previously redirected; return
+  # the text that was redirected, or nil if it wasn't redirected
+  #
+  def restore_stdout
+    content = nil
+    if @saved_stdout
+      @saved_stdout.flush
+      content = $stdout.string
+      $stdout = @saved_stdout
+      @saved_stdout = nil
+    end
+    content
   end
 
 end

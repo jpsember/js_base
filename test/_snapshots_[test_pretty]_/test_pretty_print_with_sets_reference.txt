@@ -1,25 +1,25 @@
-Array [
-  "January"
-  "February"
-  Hash {
-      a => 12
-      b => Array [
-            1
-            2
-            3
-            4 ]
-      c => Hash {
-            i => 1
-            ii => 2
-            iii => 3 }
-      d => Set {
-            3
-            1
-            4
-            5
-            9
-            2
-            7
-            "alpha"
-            "beta" } }
+[
+  "January",
+  "February",
+  {
+      "a" => 12,
+      "b" => [
+              1,
+              2,
+              3,
+              4 ],
+      "c" => {
+              "i" => 1,
+              "ii" => 2,
+              "iii" => 3 },
+      "d" => [
+              3,
+              1,
+              4,
+              5,
+              9,
+              2,
+              7,
+              "alpha",
+              "beta" ] },
   "April" ]
