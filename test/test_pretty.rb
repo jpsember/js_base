@@ -7,7 +7,7 @@ class TestPretty < JSTest
     array = ['January','February',dict,'April']
 
     TestSnapshot.new.perform do
-      puts pretty_print(array)
+      puts pretty_pr(array)
     end
   end
 

@@ -127,7 +127,7 @@ def from_our_dir(depth = 0)
   Dir.chdir(caller_dir){ yield }
 end
 
-def pretty_print(object)
+def pretty_pr(object)
   require 'json'
   JSON.pretty_generate(object)
 end
