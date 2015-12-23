@@ -134,7 +134,13 @@ end
 
 # Do a 'pretty print' of a json value, with deterministic ordering of map keys
 #
-def pretty_pr(obj,dest='',indent=0)
+def pretty_pr(obj,dest='')
+  pretty_pr_aux(obj,dest,0)
+  dest << "\n"
+  dest
+end
+
+def pretty_pr_aux(obj,dest,indent)
   if obj.nil?
     dest << 'null'
   elsif obj.is_a? Hash
@@ -144,7 +150,6 @@ def pretty_pr(obj,dest='',indent=0)
   else
     dest << obj.to_json
   end
-  dest
 end
 
 def pretty_pr_map(map,dest,indent)
@@ -165,7 +170,7 @@ def pretty_pr_map(map,dest,indent)
     dest << '"' << key << '" : '
     extraIndent += 5 + key.length
     value = map[key]
-    pretty_pr(value,dest,indent + extraIndent)
+    pretty_pr_aux(value,dest,indent + extraIndent)
     initial_adjustment = 0
     dest << ",\n" if (!same_line and i + 1 < key_set.length)
   end
@@ -189,7 +194,7 @@ def pretty_pr_list(list,dest,indent)
   size.times do |i|
     value = list[i]
     start_cursor = dest.length
-    pretty_pr(value, dest, indent)
+    pretty_pr_aux(value, dest, indent)
     row_length += dest.length - start_cursor
     initial_adjustment = 0
     if i + 1 < size
