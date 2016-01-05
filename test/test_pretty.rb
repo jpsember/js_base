@@ -19,10 +19,8 @@ class TestPretty < JSTest
                                                  "ii" => 2,
                                                  "dict2" => dict2,
                                                  "iii" => 3}}
-    array = ['January','February',dict1,'April']
-
     TestSnapshot.new.perform do
-      puts pretty_pr(array)
+      puts pretty_pr(dict1)
     end
   end
 
