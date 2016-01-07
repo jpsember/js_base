@@ -14,14 +14,14 @@ module JsonUtils
     end
   end
 
-  def clamped_key_length(key_length)
-    [18,key_length].min
-  end
+  MAX_KEY_LENGTH = 18
 
   def length_of_longest_string(set)
     len = 0
     set.each do |string|
-      len = [len,string.length].max
+      if string.length <= MAX_KEY_LENGTH
+        len = [len,string.length].max
+      end
     end
     len
   end
@@ -31,11 +31,11 @@ module JsonUtils
     key_set = map.keys.sort
     dest << '{ '
 
-    longest_length = clamped_key_length(length_of_longest_string(key_set))
+    longest_length = length_of_longest_string(key_set)
 
     first_key = true
     key_set.each do |key|
-      effective_key_length = clamped_key_length(key.length)
+      effective_key_length = [MAX_KEY_LENGTH,key.length].min
 
       key_indent = longest_length
       if first_key

@@ -24,5 +24,4 @@ class TestPretty < JSTest
     end
   end
 
-
 end
