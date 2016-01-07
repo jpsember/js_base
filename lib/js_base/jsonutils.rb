@@ -15,15 +15,29 @@ module JsonUtils
   end
 
   MAX_KEY_LENGTH = 18
+  PADDING = MAX_KEY_LENGTH / 4
 
   def length_of_longest_string(set)
     len = 0
+    padded_len = 0
+    padded_possible = true
     set.each do |string|
+      if padded_possible
+        if string.length <= MAX_KEY_LENGTH + PADDING
+          padded_len = [padded_len,string.length].max
+        else
+          padded_possible = false
+        end
+      end
       if string.length <= MAX_KEY_LENGTH
         len = [len,string.length].max
       end
     end
-    len
+    if padded_possible
+      padded_len
+    else
+      len
+    end
   end
 
   def pretty_pr_map(map,dest,indent)
@@ -35,7 +49,7 @@ module JsonUtils
 
     first_key = true
     key_set.each do |key|
-      effective_key_length = [MAX_KEY_LENGTH,key.length].min
+      effective_key_length = [longest_length,key.length].min
 
       key_indent = longest_length
       if first_key

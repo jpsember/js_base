@@ -24,4 +24,36 @@ class TestPretty < JSTest
     end
   end
 
+  def test_padding_occurs
+    dict2 = {"abc" => 14, "def" => 22}
+    dict1 = {"0123456789012345" => "padding allowed, values shifted by padding",
+             "01234567890123456" => 12,
+             "012345678901234567" => 12,
+             "0123456789012345678" => 12,
+             "01234567890123456789" => 12,
+             "012345678901234567890" => dict2,
+             "01334567890123456789" => 10
+           }
+    TestSnapshot.new.perform do
+      puts pretty_pr(dict1)
+    end
+  end
+
+  def test_no_padding_occurs
+    dict2 = {"abc" => 14, "def" => 22}
+    dict1 = {"0123456789012345" => "no padding allowed",
+             "01234567890123456" => 12,
+             "012345678901234567" => 12,
+             "0123456789012345678" => 12,
+             "01234567890123456789" => 12,
+             "012345678901234567890" => 12,
+             "0123456789012345678901" => dict2,
+             "01234567890123456789012" => 12,
+             "01334567890123456789" => 10
+           }
+    TestSnapshot.new.perform do
+      puts pretty_pr(dict1)
+    end
+  end
+
 end
