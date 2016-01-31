@@ -5,6 +5,8 @@ another pass...
 ------------------------------<stderr>------------------------------
 *** warning: test_js_base.rb (XXX) This is a warning
 *** unimplemented: test_js_base.rb (XXX) This is an unimplemented message
+*** warning: test_js_base.rb (XXX)  %s Should not be treated as sprintf argument
+*** warning: test_js_base.rb (XXX)  Should be treated as sprintf argument
 ------------------------------<stdout>------------------------------
 
 another pass...

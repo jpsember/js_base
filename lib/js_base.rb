@@ -188,7 +188,11 @@ module RubyBase
     loc = get_caller_location(depth_within_caller_stack + 2)
     msg = '*** ' << alert_name << ': ' << loc
     if args && !args.empty?
-      msg << ' ' << sprintf(args[0], *args[1..-1])
+      formatted_args = args[0]
+      if args.size > 1
+        formatted_args = sprintf(args[0], *args[1..-1])
+      end
+      msg << ' ' << formatted_args
     end
 
     if ALERT_STRINGS.add?(msg)

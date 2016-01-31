@@ -119,6 +119,8 @@ class TestJSBase < JSTest
         puts "another pass..."
         warning "This is a warning"
         unimp "This is an unimplemented message"
+        warning ' %s Should not be treated as sprintf argument'
+        warning ' %s be treated as sprintf argument', "Should"
       end
     end
   end
