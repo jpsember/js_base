@@ -135,8 +135,8 @@ end
 
 # Do a 'pretty print' of a json value, with deterministic ordering of map keys
 #
-def pretty_pr(obj,dest='')
-  JsonUtils.pretty_pr_aux(obj,dest,0)
+def pretty_pr(obj,dest='',sortkeys=true)
+  JsonUtils.pretty_pr_aux(obj,:dest=>dest,:indent=>0,:sortkeys=>sortkeys)
   dest << "\n"
   dest
 end

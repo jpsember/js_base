@@ -33,7 +33,7 @@ class TestPretty < JSTest
              "01234567890123456789" => 12,
              "012345678901234567890" => dict2,
              "01334567890123456789" => 10
-           }
+             }
     TestSnapshot.new.perform do
       puts pretty_pr(dict1)
     end
@@ -50,9 +50,23 @@ class TestPretty < JSTest
              "0123456789012345678901" => dict2,
              "01234567890123456789012" => 12,
              "01334567890123456789" => 10
-           }
+             }
     TestSnapshot.new.perform do
       puts pretty_pr(dict1)
+    end
+  end
+
+  def test_pretty_print_with_sort
+    dict = {"c" => 12, "h" => 19, "b" => [1,2,3,4],"a" => 12, "g" => 4.2 }
+    TestSnapshot.new.perform do
+      puts pretty_pr(dict)
+    end
+  end
+
+  def test_pretty_print_without_sort
+    dict = {"c" => 12, "h" => 19, "b" => [1,2,3,4],"a" => 12, "g" => 4.2 }
+    TestSnapshot.new.perform do
+      puts pretty_pr(dict,'',false)
     end
   end
 

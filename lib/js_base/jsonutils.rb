@@ -2,15 +2,15 @@ module JsonUtils
 
   module_function
 
-  def pretty_pr_aux(obj,dest,indent)
+  def pretty_pr_aux(obj,options)
     if obj.nil?
-      dest << 'null'
+      options[:dest] << 'null'
     elsif obj.is_a? Hash
-      pretty_pr_map(obj,dest,indent)
+      pretty_pr_map(obj,options)
     elsif obj.is_a? Array
-      pretty_pr_list(obj,dest,indent)
+      pretty_pr_list(obj,options)
     else
-      dest << obj.to_json
+      options[:dest] << obj.to_json
     end
   end
 
@@ -40,9 +40,15 @@ module JsonUtils
     end
   end
 
-  def pretty_pr_map(map,dest,indent)
+  def pretty_pr_map(map,options)
+    indent = options[:indent]
+    dest = options[:dest]
+
     indent += 2
-    key_set = map.keys.sort
+    key_set = map.keys
+    if options[:sortkeys]
+      key_set = key_set.sort
+    end
     dest << '{ '
 
     longest_length = length_of_longest_string(key_set)
@@ -72,8 +78,8 @@ module JsonUtils
         dest << "\n"
         tab(dest, dest.length + val_indent)
       end
-
-      pretty_pr_aux(map[key],dest,val_indent)
+      options[:indent] = val_indent
+      pretty_pr_aux(map[key],options)
     end
 
     indent -= 2
@@ -84,9 +90,13 @@ module JsonUtils
       dest << ' '
     end
     dest << '}'
+    options[:indent] = indent
   end
 
-  def pretty_pr_list(list,dest,indent)
+  def pretty_pr_list(list,options)
+    indent = options[:indent]
+    dest = options[:dest]
+
     initial_adjustment = 0
     indent += 2
     initial_adjustment = -indent
@@ -96,7 +106,8 @@ module JsonUtils
     size.times do |i|
       value = list[i]
       start_cursor = dest.length
-      pretty_pr_aux(value, dest, indent)
+      options[:indent] = indent
+      pretty_pr_aux(value, options)
       row_length += dest.length - start_cursor
       initial_adjustment = 0
       if i + 1 < size
@@ -110,6 +121,7 @@ module JsonUtils
     end
     indent -= 2
     dest << ' ]'
+    options[:indent] = indent
   end
 
 end
