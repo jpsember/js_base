@@ -36,8 +36,8 @@ $assertions_found = false
 #
 def assert!(condition,*args)
   if !$assertions_found
-      RubyBase.one_time_alert("performing assertion",0,*args)
-      $assertions_found = true
+    RubyBase.one_time_alert("performing assertion",0,*args)
+    $assertions_found = true
   end
   if !condition
     msg = 'Assertion failure'
@@ -136,7 +136,11 @@ end
 # Do a 'pretty print' of a json value, with deterministic ordering of map keys
 #
 def pretty_pr(obj,dest='',sortkeys=true)
-  JsonUtils.pretty_pr_aux(obj,:dest=>dest,:indent=>0,:sortkeys=>sortkeys)
+  JsonUtils.pretty_pr_aux(obj,
+                            :dest=>dest,
+                            :indent=>0,
+                            :sortkeys=>sortkeys
+  )
   dest << "\n"
   dest
 end

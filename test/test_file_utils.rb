@@ -78,6 +78,15 @@ class TestFileUtils < JSTest
     end
   end
 
+  def test_read_without_permissions
+    # Choose a (perhaps non-existent) file that lies within a directory
+    # that we don't have permissions for.  On my Mac, this will do:
+    path = "/private/etc/master.passwd"
+    assert_raise Errno::EACCES do
+      FileUtils.read_text_file(path,"...")
+    end
+  end
+
   def test_dir_entries
     FileUtils.write_text_file("alpha","...")
     FileUtils.mkdir_p("subdir/beta")

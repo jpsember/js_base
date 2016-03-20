@@ -6,7 +6,7 @@ module FileUtils
   #
   def write_text_file(path, contents, only_if_changed = false)
     if only_if_changed
-      if File.file?(path) && read_text_file(path) == contents
+      if File.exist?(path) && read_text_file(path) == contents
         return
       end
     end
@@ -18,7 +18,7 @@ module FileUtils
   #
   def read_text_file(path,default_contents=nil)
     contents = default_contents
-    if !contents || File.file?(path)
+    if !contents || File.exist?(path)
       File.open(path,"rb") {|f| contents = f.read }
     end
     contents
