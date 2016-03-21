@@ -18,8 +18,12 @@ module FileUtils
   #
   def read_text_file(path,default_contents=nil)
     contents = default_contents
-    if !contents || File.exist?(path)
+    begin
       File.open(path,"rb") {|f| contents = f.read }
+    rescue Errno::ENOENT => e
+      # File didn't exist
+      raise e unless default_contents
+      contents = default_contents
     end
     contents
   end
