@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
                       '[A-Z]*',
                       'test/**/*',
                       ]
-  s.add_runtime_dependency 'json'
+  s.add_runtime_dependency 'json', '~> 1.8', '>= 1.8.1'
   s.homepage = 'http://www.cs.ubc.ca/~jpsember'
   s.test_files  = Dir.glob('test/*.rb')
   s.license     = 'MIT'
