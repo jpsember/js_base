@@ -2,7 +2,7 @@ require 'rake'
 
 Gem::Specification.new do |s|
   s.name        = File.basename(__FILE__,'.gemspec')
-  s.version     = '1.1.12'
+  s.version     = '1.1.13'
   s.date        = Time.now
   s.summary     = "Jeff's basic Ruby utility functions"
   s.description = "Some fundamental functions, plus some testing utilities"

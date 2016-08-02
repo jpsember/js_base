@@ -20,6 +20,7 @@ class TestSnapshot
 
   def initialize(path_prefix = nil)
     @iocapture = nil
+    @temp_file = nil
 
     # Look for a calling method that starts with 'test_' prefix
     caller_loc = caller_locations(0)
@@ -127,8 +128,8 @@ class TestSnapshot
 
         # Not implemented: verify that we used the entire input script
 
-        @snapshot_path = Tempfile.new('io_recorder').path
-        FileUtils.write_text_file(@snapshot_path,@iocapture.output_content)
+        @temp_file = Tempfile.new('io_recorder')
+        FileUtils.write_text_file(@temp_file.path,@iocapture.output_content)
         compare_reference_and_snapshot
       end
     else
@@ -143,9 +144,8 @@ class TestSnapshot
     @reference_path = File.join(@snapshot_subdir,@path_prefix + '_reference.txt')
   end
 
-
   def compare_reference_and_snapshot(assert_if_mismatch = true)
-    difference = calc_diff(@reference_path,nil,@snapshot_path,nil)
+    difference = calc_diff(@reference_path,@temp_file.path)
     if assert_if_mismatch
       if difference
         lines = "\n" + ('-' * 130) + "\n"
@@ -156,33 +156,16 @@ class TestSnapshot
     difference == nil
   end
 
-  def calc_diff(path1=nil, text1=nil, path2=nil, text2=nil)
-    path1 = write_if_nec(path1,text1)
-    path2 = write_if_nec(path2,text2)
+  def calc_diff(path1=nil, path2=nil)
     df,_ = scall("diff -C 1 \"#{path1}\" \"#{path2}\"", false)
-    df = nil if df.size == 0
-
-    if df
-     df,_ = scall("diff --width=130 -y \"#{path1}\" \"#{path2}\"", false)
+    if df.size == 0
+      nil
+    else
+      # If difference was detected, call with more user-friendly output
+      df,_ = scall("diff --width=130 -y \"#{path1}\" \"#{path2}\"", false)
+      df
     end
-    df
   end
 
-  # Write text to a temporary file, and return path to that file
-  #
-  def write_to_temp(text)
-    file = Tempfile.new('_rubytools_')
-    path = file.path
-    write_text_file(path,text)
-    path
-  end
-
-  def write_if_nec(path,text)
-    if !path
-      raise Exception,"missing text" if !text
-      path = write_to_temp(text)
-    end
-    path
-  end
 
 end
