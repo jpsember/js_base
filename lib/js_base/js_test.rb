@@ -1,8 +1,8 @@
-require 'test/unit'
+require 'minitest/autorun'
 require 'js_base'
 require 'js_base/test_snapshot'
 
-class JSTest < Test::Unit::TestCase
+class JSTest < Minitest::Test
 
   attr_accessor :swizzler
 

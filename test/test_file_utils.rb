@@ -34,7 +34,7 @@ class TestFileUtils < JSTest
     scall("touch -t 201310310500 #{filename}")
     mtime = File.mtime(filename)
     FileUtils.write_text_file(filename,content,false)
-    assert_not_equal(mtime,File.mtime(filename))
+    refute_equal(mtime,File.mtime(filename))
   end
 
   def test_write_changed_text_file_ifchanged
@@ -73,7 +73,7 @@ class TestFileUtils < JSTest
 
   def test_read_missing_text_file
     filename = 'x'
-    assert_raise Errno::ENOENT do
+    assert_raises Errno::ENOENT do
       FileUtils.read_text_file(filename)
     end
   end
@@ -82,7 +82,7 @@ class TestFileUtils < JSTest
     # Choose a (perhaps non-existent) file that lies within a directory
     # that we don't have permissions for.  On my Mac, this will do:
     path = "/private/etc/master.passwd"
-    assert_raise Errno::EACCES do
+    assert_raises Errno::EACCES do
       FileUtils.read_text_file(path,"...")
     end
   end
@@ -101,7 +101,7 @@ class TestFileUtils < JSTest
 
   def test_dir_entries_nonexistent_directory_disallowed
     # ErrNo::ENOENT doesn't seem to be a subclass of SystemCallError as advertised
-    assert_raise Errno::ENOENT do
+    assert_raises Errno::ENOENT do
       FileUtils.directory_entries('nosuchdir',true)
     end
   end
@@ -135,19 +135,19 @@ class TestFileUtils < JSTest
   end
 
   def test_add_extension_error1
-    assert_raise ArgumentError do
+    assert_raises ArgumentError do
       FileUtils.add_extension('a/b.txt','txt')
     end
   end
 
   def test_add_extension_error2
-    assert_raise ArgumentError do
+    assert_raises ArgumentError do
       FileUtils.add_extension('a/b.txt','.')
     end
   end
 
   def test_add_extension_error3
-    assert_raise ArgumentError do
+    assert_raises ArgumentError do
       FileUtils.add_extension('a/b.txt','')
     end
   end

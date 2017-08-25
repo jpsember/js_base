@@ -34,7 +34,7 @@ class TestJSBase < JSTest
       rm -rf alpha
     eos
 
-    assert_raise SystemCallException do
+    assert_raises SystemCallException do
       scalls(cmds)
     end
   end
